@@ -4,7 +4,7 @@ import com.gsoftcode.cescortback.dto.SignupRequestDTO;
 import com.gsoftcode.cescortback.dto.UserDto;
 import com.gsoftcode.cescortback.entity.User;
 import com.gsoftcode.cescortback.enums.UserRole;
-import com.gsoftcode.cescortback.repository.CescortRepository;
+import com.gsoftcode.cescortback.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements AuthService{
 
     @Autowired
-    private CescortRepository cescortRepository;
+    private UserRepository userRepository;
 
     public UserDto signupClient(SignupRequestDTO signupRequestDTO){
         User user = new User();
@@ -25,13 +25,12 @@ public class AuthServiceImpl implements AuthService{
 
         user.setRole(UserRole.CLIENT);
 
-        return cescortRepository.save(user).getDto();
+        return userRepository.save(user).getDto();
 
 
     }
-
     @Override
     public boolean presentByEmail(String email) {
-        return cescortRepository.findFirstByEmail(email) !=null;
+        return userRepository.findFirstByEmail(email) !=null;
     }
 }
